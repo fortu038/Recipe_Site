@@ -2,12 +2,14 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Homepage from "./pages/homepage/Homepage";
+import Recipes from "./pages/recipes/Recipes";
 
 function Routing() {
   return(
     <Routes>
-      <Route path="/Recipe_Site" element={<Homepage />}/>
-      <Route path="*" element={<Navigate to="/Recipe_Site"/>} />
+      <Route path="/recipe-site" element={<Homepage />}/>
+      <Route path="/recipe-site-recipes" element={<Recipes />} />
+      <Route path="*" element={<Navigate to="/recipe-site"/>} />
     </Routes>
   )
 }
