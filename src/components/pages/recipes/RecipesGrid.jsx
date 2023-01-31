@@ -25,7 +25,7 @@ function RecipesGrid (props) {
           </ul>
         </h6> */}
         <h6>
-          Ingridents:
+          Ingredients:
           <ul>
             <li>2 pieces of Bread &#40;Any Vareity&#41;</li>
             <li>Jelly &#40;Any Vareity&#41;</li>
