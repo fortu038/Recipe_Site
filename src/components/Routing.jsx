@@ -4,12 +4,14 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./pages/homepage/Homepage";
 import Recipes from "./pages/recipes/Recipes";
 
+const site_name = "The Online Cookbook";
+
 function Routing() {
   return(
     <Routes>
-      <Route path="/recipe-site" element={<Homepage />}/>
-      <Route path="/recipe-site-recipes" element={<Recipes />} />
-      <Route path="*" element={<Navigate to="/recipe-site"/>} />
+      <Route path={`/${site_name.replace(/\s/g, "")}`} element={<Homepage />}/>
+      <Route path={`/${site_name.replace(/\s/g, "")}-recipes`} element={<Recipes />} />
+      <Route path="*" element={<Navigate to={`/${site_name.replace(/\s/g, "")}`}/>} />
     </Routes>
   )
 }
