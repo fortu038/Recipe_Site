@@ -10,8 +10,13 @@ function Recipes(props) {
       <Navigation />
 
       <div className="d-flex flex-column justify-content-center align-items-center">
-        <h2>This is the Recipes Page</h2>
-        <RecipesGrid />
+        <h2>Featured Recipes</h2>
+        {/* <RecipesGrid /> */}
+        {console.log(props.featured_recipes)}
+          {props.featured_recipes.map((data) =>{
+              return <RecipesGrid data={data} key={data.recipe_name.replace(" ", "_")} />
+            }
+          )}
       </div>
     </Container>
   )
