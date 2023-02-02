@@ -6,12 +6,54 @@ function RecipesGrid (props) {
   console.log("recipe_data is:\n");
   console.log(recipe_data);
 
+  /**
+   * Helper function that creates a list of a desired type using given data
+   * @param {*} list_type The type of list to be created. Valid inputs are ul, ol_type_1, ol_type_a, ol_type_A, ol_type_i, and ol_type_I.
+   * Any other entries will result in a console error being thrown.
+   * @param {*} list_data The data the list is to be constructed from. If invalid data is entered a console error will be thrown.
+   * @returns The HTML representing the desired list, or a console error if an invalid list type or invalid list data is entered.
+   */
+  function Create_Dynamic_Length_HTML_List(list_type, list_data) {
+    if(list_data == null) {
+      console.error("Invalid or no list data");
+      return;
+    }
+
+    const list_items = list_data.map((item, index) => {
+        return <li key={index}>{item}</li>
+      }
+    )
+
+    if(list_type === "ul") {
+      return <ul>{list_items}</ul>
+    }
+    else if(list_type === "ol_type_1") {
+      return <ol type="1">{list_items}</ol>
+    }
+    else if(list_type === "ol_type_a") {
+      return <ol type="a">{list_items}</ol>
+    }
+    else if(list_type === "ol_type_A") {
+      return <ol type="A">{list_items}</ol>
+    }
+    else if(list_type === "ol_type_i") {
+      return <ol type="i">{list_items}</ol>
+    }
+    else if(list_type === "ol_type_I") {
+      return <ol type="I">{list_items}</ol>
+    }
+    else {
+      console.error(`Invalid list type ${list_type}: Use only ul, ol_type_1, ol_type_a, ol_type_A, ol_type_i, or ol_type_I`);
+      return;
+    }
+  }
+
   return(
     <div className="align-items-center">
       {/* <div className="mt-4 text-center">
         <img
-          src={props.data.image}
-          alt={props.data.altText}
+          src={recipe_data.image}
+          alt={recipe_data.altText}
           className="Recipe-Img"
         />
       </div> */}
@@ -25,37 +67,19 @@ function RecipesGrid (props) {
         */}
         {/* <h6>
           Tags:
-          <ul>
 
-          </ul>
         </h6> */}
         <h6>
           Ingredients:
-          <ul>
-            {/* Make this and the copy and pasted versions into a separate function later */}
-            {recipe_data.recipe_ingredients.map((item, index) => {
-                return <li key={index}>{item}</li>
-              }
-            )}
-          </ul>
+          {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_ingredients)}
         </h6>
         <h6>
           Tools Needed to Make:
-          <ul>
-            {recipe_data.recipe_tools_needed.map((item, index) => {
-                return <li key={index}>{item}</li>
-              }
-            )}
-          </ul>
+          {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_tools_needed)}
         </h6>
         <h6>
           Recipe:
-          <ol type="1">
-            {recipe_data.recipe_steps.map((step, index) => {
-                return <li key={index}>{step}</li>
-              }
-            )}
-          </ol>
+          {Create_Dynamic_Length_HTML_List("ol_type_1", recipe_data.recipe_steps)}
         </h6>
       </div>
     </div>
