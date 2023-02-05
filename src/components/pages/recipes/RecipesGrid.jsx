@@ -3,8 +3,8 @@ import React from 'react'
 function RecipesGrid (props) {
   let recipe_data = props.data;
 
-  console.log("recipe_data is:\n");
-  console.log(recipe_data);
+  // console.log("recipe_data is:\n");
+  // console.log(recipe_data);
 
   /**
    * Helper function that creates a list of a desired type using given data
@@ -49,18 +49,18 @@ function RecipesGrid (props) {
   }
 
   return(
-    <div className="align-items-center">
-      {/* <div className="mt-4 text-center">
+    <div className="Recipe-Box border bg-light">
+      <div className="mt-4 text-center">
         <img
+          className="img-fluid"
           src={recipe_data.image}
-          alt={recipe_data.altText}
-          className="Recipe-Img"
+          alt={recipe_data.alt_text}
         />
-      </div> */}
+      </div>
       <div className="mt-4">
-        <h6 className="text-center">
-          Name: {recipe_data.recipe_name}
-        </h6>
+        <h4 className="text-center">
+          {recipe_data.recipe_name}
+        </h4>
         {/* 
           Maybe have a tag list later on for recipes features such as gluten-free or vegan.
           Having tags in the background could allow for easier suggestion making and searches.

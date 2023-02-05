@@ -9,8 +9,8 @@ function Recipes(props) {
     <Container>
       <Navigation />
 
-      <div className="d-flex flex-column justify-content-center align-items-center">
-        <h2>Featured Recipes</h2>
+      <div>
+        <h2 className="text-center">Featured Recipes</h2>
         {/* <RecipesGrid /> */}
         {console.log(props.featured_recipes)}
           {props.featured_recipes.map((data) =>{
