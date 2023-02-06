@@ -26,8 +26,10 @@ const featured_recipes = [
     tags: [
       "VEGAN",
       "VEGETARIAN",
-      "EASY_TO_MAKE"
-    ]
+      "EASY_TO_MAKE",
+      "TEST_RECIPE"
+    ],
+    posted_by: "General E. Lectric"
   },
   {
     image: require("./assets/images/simple_placeholder.jpg"),
@@ -51,7 +53,8 @@ const featured_recipes = [
     tags: [
       "EASY_TO_MAKE",
       "TEST_RECIPE"
-    ]
+    ],
+    posted_by: "Pour Q. Pine"
   }
 ]
 

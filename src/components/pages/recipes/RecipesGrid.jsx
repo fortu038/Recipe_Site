@@ -82,6 +82,9 @@ function RecipesGrid (props) {
           {Create_Dynamic_Length_HTML_List("ol_type_1", recipe_data.recipe_steps)}
         </h6>
       </div>
+      <div className="text-center text-secondary">
+        <h6>Posted by: {recipe_data.posted_by}</h6>
+      </div>
     </div>
   )
 }
