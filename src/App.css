@@ -37,7 +37,6 @@
   }
 }
 
-
 .Recipe-Box {
-  max-width: 100vh;
+  min-height: 65vh;
 }

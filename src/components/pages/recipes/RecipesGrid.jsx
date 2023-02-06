@@ -3,8 +3,25 @@ import React from 'react'
 function RecipesGrid (props) {
   let recipe_data = props.data;
 
+  const rough_name = recipe_data.recipe_name;
+  const clean_name = rough_name.replace(/_/g, " ");
+
   // console.log("recipe_data is:\n");
   // console.log(recipe_data);
+
+  function HideInfoSection() {
+    console.log("Hide it!");
+    document.getElementById(`info-section-${rough_name}`).hidden = true;
+    document.getElementById(`hide-button-${rough_name}`).hidden = true;
+    document.getElementById(`show-button-${rough_name}`).hidden = false;
+  }
+  
+  function ShowInfoSection() {
+    console.log("Show it!");
+    document.getElementById(`info-section-${rough_name}`).hidden = false;
+    document.getElementById(`hide-button-${rough_name}`).hidden = false;
+    document.getElementById(`show-button-${rough_name}`).hidden = true;
+  }
 
   /**
    * Helper function that creates a list of a desired type using given data
@@ -59,8 +76,9 @@ function RecipesGrid (props) {
       </div>
       <div className="mt-4">
         <h4 className="text-center">
-          {recipe_data.recipe_name}
+          {clean_name}
         </h4>
+
         {/* 
           Maybe have a tag list later on for recipes features such as gluten-free or vegan.
           Having tags in the background could allow for easier suggestion making and searches.
@@ -69,22 +87,49 @@ function RecipesGrid (props) {
           Tags:
 
         </h6> */}
-        <h6>
-          Ingredients:
-          {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_ingredients)}
-        </h6>
-        <h6>
-          Tools Needed to Make:
-          {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_tools_needed)}
-        </h6>
-        <h6>
-          Recipe:
-          {Create_Dynamic_Length_HTML_List("ol_type_1", recipe_data.recipe_steps)}
-        </h6>
+
+        <div className="text-center">
+          <button
+            id={`show-button-${rough_name}`}
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={ShowInfoSection}
+            hidden={false}
+          >
+            Show Info
+          </button>
+          <button
+            id={`hide-button-${rough_name}`}
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={HideInfoSection}
+            hidden={true}
+          >
+            Hide Info
+          </button>
+        </div>
+
+        <div id={`info-section-${rough_name}`} hidden={true}>
+          <h6>
+            Ingredients:
+            {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_ingredients)}
+          </h6>
+          <h6>
+            Tools Needed to Make:
+            {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_tools_needed)}
+          </h6>
+          <h6>
+            Recipe:
+            {Create_Dynamic_Length_HTML_List("ol_type_1", recipe_data.recipe_steps)}
+          </h6>
+        </div>
+
       </div>
+
       <div className="text-center text-secondary">
         <h6>Posted by: {recipe_data.posted_by}</h6>
       </div>
+
     </div>
   )
 }
