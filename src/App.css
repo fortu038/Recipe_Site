@@ -39,4 +39,6 @@
 
 .Recipe-Box {
   min-height: 65vh;
+  min-width: 50vw;
+  max-width: 50vw;
 }

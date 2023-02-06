@@ -9,19 +9,19 @@ function Recipes(props) {
     <Container>
       <Navigation />
 
-      <div>
-        <h2 className="text-center">Featured Recipes</h2>
-        <div className="row d-flex justify-content-center">
+      <div className="d-flex flex-column align-items-center">
+        <h2>Featured Recipes</h2>
+        {/* <div className="row d-flex justify-content-center"> */}
           {console.log(props.featured_recipes)}
             {props.featured_recipes.map((data) =>{
               return (
-                <div className="col-sm-12 h-100 p-2">
+                <div className="p-2">
                   <RecipesGrid data={data} key={data.recipe_name.replace(" ", "_")} />
                 </div>
               )
             }
           )}
-        </div>
+        {/* </div> */}
       </div>
     </Container>
   )
