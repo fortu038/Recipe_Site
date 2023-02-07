@@ -8,7 +8,7 @@ function Homepage() {
     <Container>
       <Navigation />
 
-      <div className="d-flex flex-column justify-content-center align-items-center">
+      <div className="text-secondary d-flex flex-column justify-content-center align-items-center">
         <h2>This is the Homepage</h2>
       </div>
     </Container>

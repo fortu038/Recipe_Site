@@ -9,7 +9,7 @@ function Recipes(props) {
     <Container>
       <Navigation />
 
-      <div className="d-flex flex-column align-items-center">
+      <div className="text-secondary d-flex flex-column align-items-center">
         <h2>Featured Recipes</h2>
         {/* <div className="row d-flex justify-content-center"> */}
           {console.log(props.featured_recipes)}
