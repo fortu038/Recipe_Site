@@ -30,7 +30,7 @@ function RecipesGrid (props) {
    * @param {*} list_data The data the list is to be constructed from. If invalid data is entered a console error will be thrown.
    * @returns The HTML representing the desired list, or a console error if an invalid list type or invalid list data is entered.
    */
-  function Create_Dynamic_Length_HTML_List(list_type, list_data) {
+  function CreateDynamicLengthHTMLList(list_type, list_data) {
     if(list_data == null) {
       console.error("Invalid or no list data");
       return;
@@ -112,15 +112,15 @@ function RecipesGrid (props) {
         <div id={`info-section-${rough_name}`} hidden={true}>
           <h6>
             Ingredients:
-            {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_ingredients)}
+            {CreateDynamicLengthHTMLList("ul", recipe_data.recipe_ingredients)}
           </h6>
           <h6>
             Tools Needed to Make:
-            {Create_Dynamic_Length_HTML_List("ul", recipe_data.recipe_tools_needed)}
+            {CreateDynamicLengthHTMLList("ul", recipe_data.recipe_tools_needed)}
           </h6>
           <h6>
             Recipe:
-            {Create_Dynamic_Length_HTML_List("ol_type_1", recipe_data.recipe_steps)}
+            {CreateDynamicLengthHTMLList("ol_type_1", recipe_data.recipe_steps)}
           </h6>
         </div>
 
