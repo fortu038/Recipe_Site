@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 function AddRecipeForm() {
   const [newRecipeData, setNewRecipeData] = useState({
     name: "",
-    image_file: null,
+    image: null,
+    alt_text: "",
     ingredients: [],
     tools_needed: [],
-    steps: []
+    steps: [],
+    posted_by: ""
   });
 
   function handleInputChange(e) {
@@ -32,12 +34,12 @@ function AddRecipeForm() {
         />
       </div>
       <div className="form-group pb-4">
-        <label for="image_file">Provide a Recipe Image:</label>
+        <label for="image">Provide a Recipe Image:</label>
         <br />
         <div className="d-flex justify-content-center">
           <input
             type="file"
-            name="image_file"
+            name="image"
             className="form-control-file"
             onChange={handleInputChange}
           />
