@@ -9,14 +9,14 @@ function RecipesGrid (props) {
   // console.log("recipe_data is:\n");
   // console.log(recipe_data);
 
-  function HideInfoSection() {
+  function hideInfoSection() {
     console.log("Hide it!");
     document.getElementById(`info-section-${rough_name}`).hidden = true;
     document.getElementById(`hide-button-${rough_name}`).hidden = true;
     document.getElementById(`show-button-${rough_name}`).hidden = false;
   }
   
-  function ShowInfoSection() {
+  function showInfoSection() {
     console.log("Show it!");
     document.getElementById(`info-section-${rough_name}`).hidden = false;
     document.getElementById(`hide-button-${rough_name}`).hidden = false;
@@ -30,7 +30,7 @@ function RecipesGrid (props) {
    * @param {*} list_data The data the list is to be constructed from. If invalid data is entered a console error will be thrown.
    * @returns The HTML representing the desired list, or a console error if an invalid list type or invalid list data is entered.
    */
-  function CreateDynamicLengthHTMLList(list_type, list_data) {
+  function createDynamicLengthHTMLList(list_type, list_data) {
     if(list_data == null) {
       console.error("Invalid or no list data");
       return;
@@ -93,7 +93,7 @@ function RecipesGrid (props) {
             id={`show-button-${rough_name}`}
             type="button"
             className="btn btn-outline-secondary"
-            onClick={ShowInfoSection}
+            onClick={showInfoSection}
             hidden={false}
           >
             Show Info
@@ -102,9 +102,9 @@ function RecipesGrid (props) {
             id={`hide-button-${rough_name}`}
             type="button"
             className="btn btn-outline-secondary"
-            onClick={HideInfoSection}
+            onClick={hideInfoSection}
             hidden={true}
-          >
+          > 
             Hide Info
           </button>
         </div>
@@ -112,15 +112,15 @@ function RecipesGrid (props) {
         <div id={`info-section-${rough_name}`} hidden={true}>
           <h6>
             Ingredients:
-            {CreateDynamicLengthHTMLList("ul", recipe_data.recipe_ingredients)}
+            {createDynamicLengthHTMLList("ul", recipe_data.recipe_ingredients)}
           </h6>
           <h6>
             Tools Needed to Make:
-            {CreateDynamicLengthHTMLList("ul", recipe_data.recipe_tools_needed)}
+            {createDynamicLengthHTMLList("ul", recipe_data.recipe_tools_needed)}
           </h6>
           <h6>
             Recipe:
-            {CreateDynamicLengthHTMLList("ol_type_1", recipe_data.recipe_steps)}
+            {createDynamicLengthHTMLList("ol_type_1", recipe_data.recipe_steps)}
           </h6>
         </div>
 

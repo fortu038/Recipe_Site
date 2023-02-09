@@ -11,11 +11,11 @@ function AddRecipeForm() {
     posted_by: ""
   });
 
-  function HandleInputChange(e) {
+  function handleInputChange(e) {
     setNewRecipeData({ ...newRecipeData, [e.target.name]: e.target.value })
   };
 
-  async function HandleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     console.log("Clicked submit");
     const posted_recipe = await fetch("/api/recipe", {
@@ -56,7 +56,7 @@ function AddRecipeForm() {
   };
 
   return(
-    <form className="mt-4 text-center" onSubmit={HandleSubmit}>
+    <form className="mt-4 text-center" onSubmit={handleSubmit}>
       <div id="success-alert" className="alert alert-success" role="alert" hidden={true}>
         Successful Submit!
       </div>
@@ -71,7 +71,7 @@ function AddRecipeForm() {
           type="text"
           name="name" 
           className="form-control"
-          onChange={HandleInputChange}
+          onChange={handleInputChange}
         />
       </div>
       <div className="form-group pb-4">
@@ -82,7 +82,7 @@ function AddRecipeForm() {
             type="file"
             name="image"
             className="form-control-file"
-            onChange={HandleInputChange}
+            onChange={handleInputChange}
           />
         </div>
       </div>
@@ -93,7 +93,7 @@ function AddRecipeForm() {
           type="text"
           name="ingredients"
           className="form-control"
-          onChange={HandleInputChange}
+          onChange={handleInputChange}
         />
       </div>
       <div className="form-group pb-4">
@@ -103,7 +103,7 @@ function AddRecipeForm() {
           type="text"
           name="tools_needed"
           className="form-control"
-          onChange={HandleInputChange}
+          onChange={handleInputChange}
         />
       </div>
       <div className="form-group pb-4">
@@ -113,7 +113,7 @@ function AddRecipeForm() {
           type="text"
           name="steps"
           className="form-control"
-          onChange={HandleInputChange}
+          onChange={handleInputChange}
         />
       </div>
 
