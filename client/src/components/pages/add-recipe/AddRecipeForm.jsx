@@ -72,6 +72,7 @@ function AddRecipeForm() {
           name="name" 
           className="form-control"
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="form-group pb-4">
@@ -83,6 +84,7 @@ function AddRecipeForm() {
             name="image"
             className="form-control-file"
             onChange={handleInputChange}
+            required
           />
         </div>
       </div>
@@ -94,6 +96,7 @@ function AddRecipeForm() {
           name="ingredients"
           className="form-control"
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="form-group pb-4">
@@ -104,6 +107,7 @@ function AddRecipeForm() {
           name="tools_needed"
           className="form-control"
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="form-group pb-4">
@@ -114,6 +118,7 @@ function AddRecipeForm() {
           name="steps"
           className="form-control"
           onChange={handleInputChange}
+          required
         />
       </div>
 
