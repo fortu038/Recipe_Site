@@ -12,7 +12,7 @@ function Routing(props) {
   return(
     <Routes>
       <Route path={`/${url_name}`} element={<Homepage />}/>
-      <Route path={`/${url_name}-recipes`} element={<Recipes featured_recipes={props.featured_recipes}/>} />
+      <Route path={`/${url_name}-recipes`} element={<Recipes />} />
       <Route path={`/${url_name}-add`} element={<AddRecipe />} />
       <Route path="*" element={<Navigate to={`/${url_name}`}/>} />
     </Routes>

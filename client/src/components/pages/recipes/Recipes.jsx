@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 
 import Navigation from "../../Navigation";
 import RecipesGrid from "./RecipesGrid";
 
 function Recipes(props) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/recipe")
+      .then(fetch_response => fetch_response.json())
+      .then(fetch_data => setData(fetch_data.payload));
+  }, []);
+
   return(
     <Container>
       <Navigation />
@@ -12,14 +20,19 @@ function Recipes(props) {
       <div className="text-secondary d-flex flex-column align-items-center">
         <h2>Featured Recipes</h2>
         {/* <div className="row d-flex justify-content-center"> */}
-          {console.log(props.featured_recipes)}
-            {props.featured_recipes.map((data) =>{
+          {/* {console.log(props.featured_recipes)}
+          {props.featured_recipes.map((data) =>{
               return (
                 <div className="p-2">
                   <RecipesGrid data={data} key={data.recipe_name.replace(" ", "_")} />
                 </div>
               )
             }
+          )} */}
+          {console.log(data)}
+          {data && data.map((single_recipe) =>{
+            return <RecipesGrid single_recipe={single_recipe} key={single_recipe.name} />
+          }
           )}
         {/* </div> */}
       </div>

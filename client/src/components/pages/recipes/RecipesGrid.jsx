@@ -1,13 +1,13 @@
 import React from 'react'
 
 function RecipesGrid (props) {
-  let recipe_data = props.data;
+  let recipe_data = props.single_recipe;
 
-  const rough_name = recipe_data.recipe_name;
+  const rough_name = recipe_data.name;
   const clean_name = rough_name.replace(/_/g, " ");
 
-  // console.log("recipe_data is:\n");
-  // console.log(recipe_data);
+  console.log("recipe_data is:\n");
+  console.log(recipe_data);
 
   function hideInfoSection() {
     console.log("Hide it!");
@@ -112,15 +112,15 @@ function RecipesGrid (props) {
         <div id={`info-section-${rough_name}`} hidden={true}>
           <h6>
             Ingredients:
-            {createDynamicLengthHTMLList("ul", recipe_data.recipe_ingredients)}
+            {createDynamicLengthHTMLList("ul", recipe_data.ingredients)}
           </h6>
           <h6>
             Tools Needed to Make:
-            {createDynamicLengthHTMLList("ul", recipe_data.recipe_tools_needed)}
+            {createDynamicLengthHTMLList("ul", recipe_data.tools_needed)}
           </h6>
           <h6>
             Recipe:
-            {createDynamicLengthHTMLList("ol_type_1", recipe_data.recipe_steps)}
+            {createDynamicLengthHTMLList("ol_type_1", recipe_data.steps)}
           </h6>
         </div>
 
