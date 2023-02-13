@@ -65,12 +65,15 @@ function RecipesGrid (props) {
     }
   }
 
+  // Note: This is a temporary fix until I can figure out how to store images in MongoDB
+  const recipe_image = require("../../../assets/images/simple_placeholder.jpg");
+
   return(
     <div className="Recipe-Box border bg-light">
       <div className="mt-4 text-center">
         <img
           className="img-fluid"
-          src={recipe_data.image}
+          src={recipe_image}
           alt={recipe_data.alt_text}
         />
       </div>
