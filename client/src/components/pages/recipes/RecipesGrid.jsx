@@ -41,27 +41,22 @@ function RecipesGrid (props) {
       }
     )
 
-    if(list_type === "ul") {
-      return <ul>{list_items}</ul>
-    }
-    else if(list_type === "ol_type_1") {
-      return <ol type="1">{list_items}</ol>
-    }
-    else if(list_type === "ol_type_a") {
-      return <ol type="a">{list_items}</ol>
-    }
-    else if(list_type === "ol_type_A") {
-      return <ol type="A">{list_items}</ol>
-    }
-    else if(list_type === "ol_type_i") {
-      return <ol type="i">{list_items}</ol>
-    }
-    else if(list_type === "ol_type_I") {
-      return <ol type="I">{list_items}</ol>
-    }
-    else {
-      console.error(`Invalid list type ${list_type}: Use only ul, ol_type_1, ol_type_a, ol_type_A, ol_type_i, or ol_type_I`);
-      return;
+    switch(list_type) {
+      case "ul":
+        return <ul>{list_items}</ul>
+      case "ol_type_1":
+        return <ol type="1">{list_items}</ol>
+      case "ol_type_a":
+        return <ol type="a">{list_items}</ol>
+      case "ol_type_A":
+        return <ol type="A">{list_items}</ol>
+      case "ol_type_i":
+        return <ol type="i">{list_items}</ol>
+      case "ol_type_I":
+        return <ol type="I">{list_items}</ol>
+      default:
+        console.error(`Invalid list type ${list_type}: Use only ul, ol_type_1, ol_type_a, ol_type_A, ol_type_i, or ol_type_I`);
+        return;
     }
   }
 

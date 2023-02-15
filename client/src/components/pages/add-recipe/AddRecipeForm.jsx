@@ -19,7 +19,7 @@ function AddRecipeForm() {
       
       const file_size_in_Mb = (file_size_in_bytes / 1000) / 1000;
 
-      if(file_size_in_Mb > 7.0) {
+      if(file_size_in_Mb > 6.0) {
         alert("File size too large! Please use a file smaller than 7Mb");
       }
       else {
@@ -50,6 +50,7 @@ function AddRecipeForm() {
     e.preventDefault();
     console.log("Clicked submit");
     console.log(newRecipeData);
+
     const posted_recipe = await fetch("/api/recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -66,8 +67,10 @@ function AddRecipeForm() {
         }
       )
     });
+
     const response_to_post_request = await posted_recipe.json();
     console.log(response_to_post_request);
+    
     if(response_to_post_request.result === "success") {
       console.log("Created new recipe!");
       document.getElementById("success-alert").hidden = false;
@@ -108,7 +111,7 @@ function AddRecipeForm() {
         />
       </div>
       <div className="form-group pb-4">
-        <label htmlFor="image">Provide a Recipe Image &#40;JPEGs and PNGs only, file size limit of 7Mb&#41;:</label>
+        <label htmlFor="image">Provide a Recipe Image &#40;JPEGs and PNGs only, file size limit of 6Mb&#41;:</label>
         <br />
         <div className="d-flex justify-content-center">
           {/* <input
