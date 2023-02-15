@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({limit: "8mb"}));
+app.use(express.json({limit: "10mb"}));
 
 
 app.use(express.static(path.join(__dirname, "../client/build")));
