@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+
+import FileBase64 from "react-file-base64";
 
 function AddRecipeForm() {
+  // Use Buffer later for making heic and pdf files compatable with system.
+  const Buffer = require("buffer/").Buffer;
+
   const [newRecipeData, setNewRecipeData] = useState({
     name: "",
     image: null,
@@ -18,6 +23,7 @@ function AddRecipeForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log("Clicked submit");
+    console.log(newRecipeData);
     const posted_recipe = await fetch("/api/recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -76,15 +82,22 @@ function AddRecipeForm() {
         />
       </div>
       <div className="form-group pb-4">
-        <label htmlFor="image">Provide a Recipe Image:</label>
+        <label htmlFor="image">Provide a Recipe Image &#40;JPEGs and PNGs only, file size limit of 8Mb&#41;:</label>
         <br />
         <div className="d-flex justify-content-center">
-          <input
+          {/* <input
             type="file"
             name="image"
             className="form-control-file"
             onChange={handleInputChange}
             required
+          /> */}
+          <FileBase64
+            className="d-flex justify-content-center"
+            type="file"
+            name="image"
+            multiple={false}
+            onDone={({ base64 }) => setNewRecipeData({ ...newRecipeData, image: base64 })}
           />
         </div>
       </div>
