@@ -6,6 +6,17 @@ function AddRecipeForm() {
   // Use Buffer later for making heic and pdf files compatable with system.
   const Buffer = require("buffer/").Buffer;
 
+  function isValidFile(fileBase64) {
+    const starting_slice = fileBase64.slice(0,6);
+    const slice_final_char = starting_slice.charAt(5);
+    if(slice_final_char === "i") {
+      setNewRecipeData({ ...newRecipeData, image: fileBase64 });
+    }
+    else {
+      alert("Invalid file type! Please use a PNG or JPEG.");
+    }
+  }
+
   const [newRecipeData, setNewRecipeData] = useState({
     name: "",
     image: null,
@@ -97,7 +108,7 @@ function AddRecipeForm() {
             type="file"
             name="image"
             multiple={false}
-            onDone={({ base64 }) => setNewRecipeData({ ...newRecipeData, image: base64 })}
+            onDone={({ base64 }) => isValidFile(base64)}
           />
         </div>
       </div>
