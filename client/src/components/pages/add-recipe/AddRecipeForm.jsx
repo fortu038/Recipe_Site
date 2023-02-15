@@ -9,6 +9,7 @@ function AddRecipeForm() {
   function isValidFile(fileBase64) {
     const starting_slice = fileBase64.slice(0,6);
     const slice_final_char = starting_slice.charAt(5);
+    // Checks if base64 data is set to image
     if(slice_final_char === "i") {
       const file_data = fileBase64.split(",")[0];
 
