@@ -18,6 +18,7 @@ function AddRecipeForm() {
       const file_size_in_Mb = (file_size_in_bytes / 1000) / 1000;
 
       if(file_size_in_Mb > 6.0) {
+        document.getElementById("submit-button").hidden = true;
         alert("File size too large! Please use a file smaller than 7Mb");
       }
       else {
@@ -26,6 +27,7 @@ function AddRecipeForm() {
       }
     }
     else {
+      document.getElementById("submit-button").hidden = true;
       alert("Invalid file type! Please use a PNG or JPEG.");
     }
   }
