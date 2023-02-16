@@ -25,6 +25,9 @@ function Navigation() {
             <Nav.Link as={Link} to={`/${url_name}-add`}>
               <h5>Add Recipe</h5>
             </Nav.Link>
+            <Nav.Link as={Link} to={`/${url_name}-login`}>
+              <h5>Login</h5>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
