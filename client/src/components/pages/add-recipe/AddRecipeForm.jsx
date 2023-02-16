@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import FileBase64 from "react-file-base64";
 
 function AddRecipeForm() {
-  // Use Buffer later for making heic and pdf files compatable with system.
-  const Buffer = require("buffer/").Buffer;
 
   function isValidFile(fileBase64) {
     const starting_slice = fileBase64.slice(0,6);
@@ -114,13 +112,6 @@ function AddRecipeForm() {
         <label htmlFor="image">Provide a Recipe Image &#40;JPEGs and PNGs only, file size limit of 6Mb&#41;:</label>
         <br />
         <div className="d-flex justify-content-center">
-          {/* <input
-            type="file"
-            name="image"
-            className="form-control-file"
-            onChange={handleInputChange}
-            required
-          /> */}
           <FileBase64
             className="d-flex justify-content-center"
             type="file"
