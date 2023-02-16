@@ -1,6 +1,6 @@
 const Recipe = require("../models/Recipe");
 
-require("dotenv").config;
+require("dotenv").config();
 
 const getAllRecipes = async (req, res) => {
   try {
