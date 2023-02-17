@@ -3,44 +3,38 @@ import React, { useState } from "react";
 function AddRecipeForm() {
 
   async function convertFileToBase64(fileToConvert) {
-    console.log("file to convert:");
-    console.log(fileToConvert);
-    const reader = new FileReader();
-    reader.readAsDataURL(fileToConvert);
-    reader.onload = function () {
-      console.log("reader.result is:");
-      console.log(reader.result);
-      return reader.result;
-    };
-    reader.onerror = function (err) {
-      console.error(`Error: ${err}`);
-    };
-  }
+    let result_base64 = await new Promise((resolve) => {
+        let reader = new FileReader();
+        reader.onload = (e) => resolve(reader.result);
+        reader.readAsDataURL(fileToConvert);
+    });
+
+    return result_base64;
+}
 
   async function isValidFile() {
-    const file = document.getElementById("image").files[0];
-
-    console.log("file input:");
-    console.log(file);
-
-    const file_Mb_limit = 7.0;
-
+    const file = await document.getElementById("image").files[0];
+    
     const file_base64 = await convertFileToBase64(file);
-    console.log("file_base64 is:");
-    console.log(file_base64);
 
-    const file_data = file_base64.split(",")[0];
+    const file_size = file.size;
 
-    const base64_length = file_base64.length - (file_data.length + 1);
-    const file_size_in_bytes = 4 * Math.ceil((base64_length / 3)) * 0.5624896334383812;
-    const file_size_in_Mb = (file_size_in_bytes / 1000) / 1000;
+    const file_Mb_limit = 7;
+    const file_byte_limt = file_Mb_limit * 1048576;
 
-    const is_file_too_big = file_size_in_Mb > file_Mb_limit;
+    const is_file_too_big = file_size > file_byte_limt;
 
     if(is_file_too_big) {
+      document.getElementById("submit-button").disabled = true;
+
       alert(`File size too large! Please use a file smaller than ${file_Mb_limit}Mb`);
     }
     else {
+      console.log("file_base64 is:");
+      console.log(file_base64);
+
+      document.getElementById("submit-button").disabled = false;
+
       setNewRecipeData({ ...newRecipeData, image: file_base64 });
     }
   }
@@ -172,7 +166,7 @@ function AddRecipeForm() {
         />
       </div>
 
-      <button id="submit-button" type="submit" className="btn btn-secondary">Add Recipe</button>
+      <button id="submit-button" type="submit" className="btn btn-secondary" disabled={true}>Add Recipe</button>
     </form>
   )
 }
