@@ -11,7 +11,7 @@ function UserLogin() {
 
       <div className="text-secondary d-flex flex-column justify-content-center align-items-center">
         <h2>Log In</h2>
-        {/* <UserLoginForm /> */}
+        <UserLoginForm />
       </div>
     </Container>
   )

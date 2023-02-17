@@ -11,7 +11,7 @@ function AppProvider(props) {
   const [ appState, setAppState ] = useState({ user: null });
   const [ appReady, setAppReady ] = useState(false);
 
-  async function lookupUser() {
+  async function lookUpUser() {
     const authCheck = await fetch("/api/user/lookup");
     const checkResult = await authCheck.json();
     if( checkResult && checkResult.result === "success" ){
@@ -28,7 +28,9 @@ function AppProvider(props) {
   };
 
   useEffect(() => {
-    if( !appState.user ) lookupUser()
+    if( !appState.user ) {
+      lookUpUser();
+    }
   }, [appState.user]);
 
   return (
@@ -42,5 +44,5 @@ function AppProvider(props) {
   )
 };
 
-const AppConsumer = AppContext.Consumer
-export { AppContext, AppConsumer, AppProvider }
+const AppConsumer = AppContext.Consumer;
+export { AppContext, AppConsumer, AppProvider };
