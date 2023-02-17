@@ -1,34 +1,47 @@
 import React, { useState } from "react";
 
-import FileBase64 from "react-file-base64";
-
 function AddRecipeForm() {
 
-  function isValidFile(fileBase64) {
-    const starting_slice = fileBase64.slice(0,6);
-    const slice_final_char = starting_slice.charAt(5);
-    // Checks if base64 data is set to image
-    if(slice_final_char === "i") {
-      const file_data = fileBase64.split(",")[0];
+  async function convertFileToBase64(fileToConvert) {
+    console.log("file to convert:");
+    console.log(fileToConvert);
+    const reader = new FileReader();
+    reader.readAsDataURL(fileToConvert);
+    reader.onload = function () {
+      console.log("reader.result is:");
+      console.log(reader.result);
+      return reader.result;
+    };
+    reader.onerror = function (err) {
+      console.error(`Error: ${err}`);
+    };
+  }
 
-      const base64_length = fileBase64.length - (file_data.length + 1);
+  async function isValidFile() {
+    const file = document.getElementById("image").files[0];
 
-      const file_size_in_bytes = 4 * Math.ceil((base64_length / 3)) * 0.5624896334383812;
-      
-      const file_size_in_Mb = (file_size_in_bytes / 1000) / 1000;
+    console.log("file input:");
+    console.log(file);
 
-      if(file_size_in_Mb > 6.0) {
-        document.getElementById("submit-button").hidden = true;
-        alert("File size too large! Please use a file smaller than 7Mb");
-      }
-      else {
-        setNewRecipeData({ ...newRecipeData, image: fileBase64 });
-        document.getElementById("submit-button").hidden = false;
-      }
+    const file_Mb_limit = 7.0;
+
+    const file_base64 = await convertFileToBase64(file);
+    console.log("file_base64 is:");
+    console.log(file_base64);
+
+    const file_data = file_base64.split(",")[0];
+
+    const base64_length = file_base64.length - (file_data.length + 1);
+    const file_size_in_bytes = 4 * Math.ceil((base64_length / 3)) * 0.5624896334383812;
+    const file_size_in_Mb = (file_size_in_bytes / 1000) / 1000;
+
+    const is_file_too_big = file_size_in_Mb > file_Mb_limit;
+
+    if(is_file_too_big) {
+      alert(`File size too large! Please use a file smaller than ${file_Mb_limit}Mb`);
     }
     else {
-      document.getElementById("submit-button").hidden = true;
-      alert("Invalid file type! Please use a PNG or JPEG.");
+      setNewRecipeData({ ...newRecipeData, image: file_base64 });
     }
   }
 
@@ -114,12 +127,14 @@ function AddRecipeForm() {
         <label htmlFor="image">Provide a Recipe Image &#40;JPEGs and PNGs only, file size limit of 6Mb&#41;:</label>
         <br />
         <div className="d-flex justify-content-center">
-          <FileBase64
+          <input
+            id="image"
             className="d-flex justify-content-center"
             type="file"
             name="image"
+            accept="image/png, image/jpg, image/jpeg"
             multiple={false}
-            onDone={({ base64 }) => isValidFile(base64)}
+            onChange={isValidFile}
           />
         </div>
       </div>
@@ -157,7 +172,7 @@ function AddRecipeForm() {
         />
       </div>
 
-      <button id="submit-button" type="submit" className="btn btn-secondary" hidden={true}>Add Recipe</button>
+      <button id="submit-button" type="submit" className="btn btn-secondary">Add Recipe</button>
     </form>
   )
 }
