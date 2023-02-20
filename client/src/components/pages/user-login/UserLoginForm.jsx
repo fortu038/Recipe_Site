@@ -51,6 +51,7 @@ function UserLoginForm() {
             type="text"
             name="username" 
             className="form-control"
+            value={loginCreds.username}
             onChange={handleInputChange}
           />
         </div>
@@ -61,6 +62,7 @@ function UserLoginForm() {
             type="password"
             name="password" 
             className="form-control"
+            value={loginCreds.password}
             onChange={handleInputChange}
           />
         </div>
