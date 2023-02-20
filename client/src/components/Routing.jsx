@@ -17,13 +17,11 @@ function Routing(props) {
     <Routes>
       <Route path={`/${url_name}`} element={<Homepage />}/>
       <Route path={`/${url_name}-recipes`} element={<Recipes />} />
-      <Route path={`/${url_name}-add`} element={<AddRecipe />} />
       <Route path={`/${url_name}-login`} element={<UserLogin />} />
       { appState.user &&
-        <>
-        
-        </>
+        <Route path={`/${url_name}-add`} element={<AddRecipe />} />
       }
+      <Route path={`/${url_name}-add`} element={<Navigate to={`/${url_name}-login`}/>} />
       <Route path="*" element={<Navigate to={`/${url_name}`}/>} />
     </Routes>
   )
