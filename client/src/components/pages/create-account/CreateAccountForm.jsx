@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Cookie from "js-cookie";
 import { useAppContext } from "../../utils/AppContext";
 
+// TODO: Make it so users cannot have spaces in their names
+
 const site_name = "The Online Cookbook";
 const url_name = site_name.replace(/\s/g, "");
 

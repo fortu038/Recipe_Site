@@ -55,6 +55,8 @@ function AddRecipeForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const username = await appState.user.username;
+
     const posted_recipe = await fetch("/api/recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,8 +67,8 @@ function AddRecipeForm() {
           alt_text: newRecipeData.name,
           ingredients: newRecipeData.ingredients.split(", "),
           tools_needed: newRecipeData.tools_needed.split(", "),
-          steps: newRecipeData.steps.split(", "),
-          posted_by: appState.user.username,
+          steps: newRecipeData.steps.split(/\d+\. /g).slice(1),
+          posted_by: username,
           tags: ["EMPTY"]
         }
       )
@@ -149,13 +151,16 @@ function AddRecipeForm() {
         />
       </div>
       <div className="form-group pb-4">
-        <label htmlFor="steps">Enter Recipe Steps in Order &#40;Put commas between each entry&#41;:</label>
+        <label htmlFor="steps">Enter Recipe Steps in Order &#40;Type each step out as the step number followed by a period  and space followed by the step text&#41;:</label>
         <br />
-        <input
+        <textarea
           type="text"
           name="steps"
           className="form-control"
+          rows="5"
           onChange={handleInputChange}
+          style={{height: "100px"}}
+          placeholder={"1. Example step 1\n2. Example step 2\n3. Example step 3"}
           required
         />
       </div>

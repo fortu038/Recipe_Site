@@ -1,21 +1,22 @@
-import React from 'react'
+import React from 'react';
+
+// TODO: Make secuirty for individual entries better by encrypting the recipe IDs when they are used in the tag IDs
 
 function RecipesGrid (props) {
   let recipe_data = props.single_recipe;
 
-  const rough_name = recipe_data.name;
-  const clean_name = rough_name.replace(/_/g, " ");
+  const clean_name = recipe_data.name.replace(/_/g, " ");
 
   function hideInfoSection() {
-    document.getElementById(`info-section-${rough_name}`).hidden = true;
-    document.getElementById(`hide-button-${rough_name}`).hidden = true;
-    document.getElementById(`show-button-${rough_name}`).hidden = false;
+    document.getElementById(`info-section-${recipe_data._id}`).hidden = true;
+    document.getElementById(`hide-button-${recipe_data._id}`).hidden = true;
+    document.getElementById(`show-button-${recipe_data._id}`).hidden = false;
   }
   
   function showInfoSection() {
-    document.getElementById(`info-section-${rough_name}`).hidden = false;
-    document.getElementById(`hide-button-${rough_name}`).hidden = false;
-    document.getElementById(`show-button-${rough_name}`).hidden = true;
+    document.getElementById(`info-section-${recipe_data._id}`).hidden = false;
+    document.getElementById(`hide-button-${recipe_data._id}`).hidden = false;
+    document.getElementById(`show-button-${recipe_data._id}`).hidden = true;
   }
 
   /**
@@ -80,7 +81,7 @@ function RecipesGrid (props) {
 
         <div className="text-center">
           <button
-            id={`show-button-${rough_name}`}
+            id={`show-button-${recipe_data._id}`}
             type="button"
             className="btn btn-outline-secondary"
             onClick={showInfoSection}
@@ -89,7 +90,7 @@ function RecipesGrid (props) {
             Show Info
           </button>
           <button
-            id={`hide-button-${rough_name}`}
+            id={`hide-button-${recipe_data._id}`}
             type="button"
             className="btn btn-outline-secondary"
             onClick={hideInfoSection}
@@ -99,7 +100,7 @@ function RecipesGrid (props) {
           </button>
         </div>
 
-        <div id={`info-section-${rough_name}`} hidden={true}>
+        <div id={`info-section-${recipe_data._id}`} hidden={true}>
           <h6>
             Ingredients:
             {createDynamicLengthHTMLList("ul", recipe_data.ingredients)}
