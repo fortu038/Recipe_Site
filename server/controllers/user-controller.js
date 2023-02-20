@@ -63,9 +63,9 @@ const createUser = async (req, res) => {
 };
 
 const authenticateLogin = async (req, res) => {
-  const foundUser = await User.findOne({ email: req.body.email });
+  const foundUser = await User.findOne({ username: req.body.username });
   if( !foundUser ) {
-    return res.status(401).json({ message: "Invalid email" });
+    return res.status(401).json({ message: "Invalid username" });
   }
 
   const isValid = await bcrypt.compare(req.body.password, foundUser.password);
@@ -74,7 +74,7 @@ const authenticateLogin = async (req, res) => {
   }
 
   const { password, ...modifiedUser } = foundUser;
-  const token = jwt.sign({ _id: foundUser._id, email: foundUser.email}, process.env.JWT_SECRET);
+  const token = jwt.sign({ _id: foundUser._id, username: foundUser.username}, process.env.JWT_SECRET);
 
   res
     .status(200)

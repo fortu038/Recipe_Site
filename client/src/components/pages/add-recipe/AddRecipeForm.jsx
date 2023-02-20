@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useAppContext } from "../../utils/AppContext";
 
 function AddRecipeForm() {
+  const { appState } = useAppContext();
 
   async function convertFileToBase64(fileToConvert) {
     let result_base64 = await new Promise((resolve) => {
@@ -69,7 +71,7 @@ function AddRecipeForm() {
           ingredients: newRecipeData.ingredients.split(", "),
           tools_needed: newRecipeData.tools_needed.split(", "),
           steps: newRecipeData.steps.split(", "),
-          posted_by: "posted_by placeholder",
+          posted_by: appState.user.username,
           tags: ["EMPTY"]
         }
       )

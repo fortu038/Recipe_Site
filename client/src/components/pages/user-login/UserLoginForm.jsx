@@ -9,7 +9,7 @@ const url_name = site_name.replace(/\s/g, "");
 function UserLoginForm() {
   const { appState, setAppState } = useAppContext();
 
-  const [ loginCreds, setLoginCreds ] = useState({ email: "", password: "" });
+  const [ loginCreds, setLoginCreds ] = useState({ username: "", password: "" });
   const [ formMessage, setFormMessage ] = useState({ type: "", msg: "" });
 
   async function handleLogin(e) {
@@ -26,9 +26,9 @@ function UserLoginForm() {
       Cookie.set("auth-token", authResult.token)
       setAppState({...appState, user: authResult.user});
     } else {
-      setFormMessage({ type: "alert-danger", msg: "You could not be logged in with the provided email and password." });
+      setFormMessage({ type: "alert-danger", msg: "You could not be logged in with the provided username and password." });
     }
-    setLoginCreds({ email: "", password: "" });
+    setLoginCreds({ username: "", password: "" });
   };
 
   function handleInputChange(e) {
@@ -45,13 +45,13 @@ function UserLoginForm() {
     <>
       <form className="mt-4 text-center" onSubmit={handleLogin}>
         <div className="form-group pb-4">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="username">Username:</label>
           <br />
           <input
             type="text"
-            name="email" 
+            name="username" 
             className="form-control"
-            value={loginCreds.email}
+            value={loginCreds.username}
             onChange={handleInputChange}
           />
         </div>
