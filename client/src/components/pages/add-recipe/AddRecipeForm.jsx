@@ -57,8 +57,6 @@ function AddRecipeForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("Clicked submit");
-    console.log(newRecipeData);
 
     const posted_recipe = await fetch("/api/recipe", {
       method: "POST",

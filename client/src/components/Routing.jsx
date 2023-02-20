@@ -6,6 +6,7 @@ import Homepage from "./pages/homepage/Homepage";
 import Recipes from "./pages/recipes/Recipes";
 import AddRecipe from "./pages/add-recipe/AddRecipe";
 import UserLogin from "./pages/user-login/UserLogin";
+import CreateAccount from "./pages/create-account/CreateAccount";
 
 const site_name = "The Online Cookbook";
 const url_name = site_name.replace(/\s/g, "");
@@ -17,7 +18,12 @@ function Routing(props) {
     <Routes>
       <Route path={`/${url_name}`} element={<Homepage />}/>
       <Route path={`/${url_name}-recipes`} element={<Recipes />} />
-      <Route path={`/${url_name}-login`} element={<UserLogin />} />
+      { !appState.user &&
+        <>
+          <Route path={`/${url_name}-login`} element={<UserLogin />} />
+          <Route path={`/${url_name}-create`} element={<CreateAccount />} />
+        </>
+      }
       { appState.user &&
         <Route path={`/${url_name}-add`} element={<AddRecipe />} />
       }

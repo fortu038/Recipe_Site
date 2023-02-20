@@ -23,7 +23,7 @@ function UserLoginForm() {
     const authResult = await authCheck.json();
 
     if( authResult.result === "success" ){
-      Cookie.set("auth-token", authResult.token)
+      Cookie.set("auth-token", authResult.token);
       setAppState({...appState, user: authResult.user});
     } else {
       setFormMessage({ type: "alert-danger", msg: "You could not be logged in with the provided username and password." });
@@ -69,6 +69,7 @@ function UserLoginForm() {
 
         <button type="submit" className="btn btn-secondary">Log In</button>
       </form>
+      <a href={`/${url_name}-create`} className="link-secondary">Create an Account</a>
       { formMessage.msg.length > 0 && (
         <alert className={`alert ${formMessage.type}`}>
           {formMessage.msg}

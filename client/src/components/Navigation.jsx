@@ -54,7 +54,7 @@ function Navigation() {
             }
             {!appState.user &&
               <Nav.Link as={Link} to={`/${url_name}-login`}>
-                <h5>Login</h5>
+                <h5>Login or Create an Account</h5>
               </Nav.Link>
             }
           </Nav>
