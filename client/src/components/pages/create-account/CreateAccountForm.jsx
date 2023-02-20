@@ -60,7 +60,7 @@ function CreateAccountForm() {
         setNewAccountInfo({ username: "", email: "", password: "", confirmPassword: "" });
       }
       else {
-        setFormMessage({ type: "alert-danger", msg: "An account could not be created at this time. Please try again later." });
+        setFormMessage({ type: "alert-danger", msg: response_to_post_request.message });
       }
     }
   };
@@ -119,7 +119,9 @@ function CreateAccountForm() {
           />
         </div>
 
-        <button type="submit" className="btn btn-secondary">Create Account</button>
+        <div className="pb-4">
+          <button type="submit" className="btn btn-secondary">Create Account</button>
+        </div>
       </form>
       { formMessage.msg.length > 0 && (
         <alert className={`alert ${formMessage.type}`}>

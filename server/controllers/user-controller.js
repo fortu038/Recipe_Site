@@ -58,6 +58,17 @@ const createUser = async (req, res) => {
     res.status(200).json({result: "success", payload: createQuery});
   }
   catch(err) {
+    const usernameCheck = await User.findOne({username: req.body.username});
+    if(usernameCheck != null) {
+      res.status(400).json({message: "This username is already in use."});
+      return;
+    }
+
+    const emailCheck = await User.findOne({email: req.body.email});
+    if(emailCheck != null) {
+      res.status(400).json({message: "This email is already in use."});
+      return;
+    }
     res.status(400).json({ message: "Unable to create a user, please try again later." });
   }
 };
