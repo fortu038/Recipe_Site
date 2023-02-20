@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Cookie from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -11,7 +12,7 @@ function AppProvider(props) {
   const [ appState, setAppState ] = useState({ user: null });
   const [ appReady, setAppReady ] = useState(false);
 
-  async function lookupUser() {
+  async function lookUpUser() {
     const authCheck = await fetch("/api/user/lookup");
     const checkResult = await authCheck.json();
     if( checkResult && checkResult.result === "success" ){
@@ -28,19 +29,21 @@ function AppProvider(props) {
   };
 
   useEffect(() => {
-    if( !appState.user ) lookupUser()
+    if( !appState.user ) {
+      lookUpUser();
+    }
   }, [appState.user]);
 
   return (
-    <div>
+    <>
       { appReady === true && (
         <AppContext.Provider value={{ appState, setAppState, logout }}>
           { props.children }
         </AppContext.Provider>
       )}
-    </div>
+    </>
   )
 };
 
-const AppConsumer = AppContext.Consumer
-export { AppContext, AppConsumer, AppProvider }
+const AppConsumer = AppContext.Consumer;
+export { AppContext, AppConsumer, AppProvider };
