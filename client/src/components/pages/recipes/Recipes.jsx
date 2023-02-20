@@ -18,7 +18,7 @@ function Recipes(props) {
       <Navigation />
 
       <div className="text-secondary d-flex flex-column align-items-center">
-        <h2>Featured Recipes</h2>
+        <h2>Recipes</h2>
           {data && data.map((single_recipe) =>{
             return <RecipesGrid single_recipe={single_recipe} key={single_recipe.name} />
           }
