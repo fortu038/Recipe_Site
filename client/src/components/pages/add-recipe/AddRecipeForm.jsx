@@ -32,9 +32,6 @@ function AddRecipeForm() {
       alert(`File size too large! Please use a file smaller than ${file_Mb_limit}Mb`);
     }
     else {
-      console.log("file_base64 is:");
-      console.log(file_base64);
-
       document.getElementById("submit-button").disabled = false;
 
       setNewRecipeData({ ...newRecipeData, image: file_base64 });
@@ -76,10 +73,8 @@ function AddRecipeForm() {
     });
 
     const response_to_post_request = await posted_recipe.json();
-    console.log(response_to_post_request);
     
     if(response_to_post_request.result === "success") {
-      console.log("Created new recipe!");
       document.getElementById("success-alert").hidden = false;
       setNewRecipeData({
         name: "",
@@ -92,7 +87,6 @@ function AddRecipeForm() {
       });
     }
     else {
-      console.log("No new recipe!");
       document.getElementById("failure-alert").hidden = false;
     }
   };

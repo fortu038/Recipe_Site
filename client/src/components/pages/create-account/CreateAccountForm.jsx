@@ -20,7 +20,7 @@ function CreateAccountForm() {
     e.preventDefault();
     setFormMessage({ type: "", msg: "" });
 
-    if(newAccountInfo.password != newAccountInfo.confirmPassword) {
+    if(newAccountInfo.password !== newAccountInfo.confirmPassword) {
       setFormMessage({ type: "alert-danger", msg: "The passwords you entered did not match." })
     }
     else {

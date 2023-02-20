@@ -18,7 +18,6 @@ function Navigation() {
       headers: { "Content-Type": "application/json" }
     })
     const lookupResult = await lookupCheck.json();
-    console.log(lookupResult);
 
     // If the login was good, save the returned token as a cookie
     if( lookupResult.result === "success" ){

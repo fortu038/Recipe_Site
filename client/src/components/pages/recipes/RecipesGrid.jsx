@@ -6,18 +6,13 @@ function RecipesGrid (props) {
   const rough_name = recipe_data.name;
   const clean_name = rough_name.replace(/_/g, " ");
 
-  console.log("recipe_data is:\n");
-  console.log(recipe_data);
-
   function hideInfoSection() {
-    console.log("Hide it!");
     document.getElementById(`info-section-${rough_name}`).hidden = true;
     document.getElementById(`hide-button-${rough_name}`).hidden = true;
     document.getElementById(`show-button-${rough_name}`).hidden = false;
   }
   
   function showInfoSection() {
-    console.log("Show it!");
     document.getElementById(`info-section-${rough_name}`).hidden = false;
     document.getElementById(`hide-button-${rough_name}`).hidden = false;
     document.getElementById(`show-button-${rough_name}`).hidden = true;
