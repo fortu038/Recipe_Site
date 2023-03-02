@@ -1,4 +1,5 @@
 import React from 'react';
+import bcryptjs from "bcryptjs";
 
 // TODO: Make secuirty for individual entries better by encrypting the recipe IDs when they are used in the tag IDs
 
@@ -8,15 +9,15 @@ function RecipesGrid (props) {
   const clean_name = recipe_data.name.replace(/_/g, " ");
 
   function hideInfoSection() {
-    document.getElementById(`info-section-${recipe_data._id}`).hidden = true;
-    document.getElementById(`hide-button-${recipe_data._id}`).hidden = true;
-    document.getElementById(`show-button-${recipe_data._id}`).hidden = false;
+    document.getElementById(`info-section-${hashed_id}`).hidden = true;
+    document.getElementById(`hide-button-${hashed_id}`).hidden = true;
+    document.getElementById(`show-button-${hashed_id}`).hidden = false;
   }
   
   function showInfoSection() {
-    document.getElementById(`info-section-${recipe_data._id}`).hidden = false;
-    document.getElementById(`hide-button-${recipe_data._id}`).hidden = false;
-    document.getElementById(`show-button-${recipe_data._id}`).hidden = true;
+    document.getElementById(`info-section-${hashed_id}`).hidden = false;
+    document.getElementById(`hide-button-${hashed_id}`).hidden = false;
+    document.getElementById(`show-button-${hashed_id}`).hidden = true;
   }
 
   /**
@@ -56,6 +57,9 @@ function RecipesGrid (props) {
     }
   }
 
+  const salt = bcryptjs.genSaltSync(10);
+  var hashed_id = bcryptjs.hashSync(recipe_data._id, salt);
+
   return(
     <div className="Recipe-Box border bg-light">
       <div className="mt-4 text-center">
@@ -81,7 +85,7 @@ function RecipesGrid (props) {
 
         <div className="text-center">
           <button
-            id={`show-button-${recipe_data._id}`}
+            id={`show-button-${hashed_id}`}
             type="button"
             className="btn btn-outline-secondary"
             onClick={showInfoSection}
@@ -90,7 +94,7 @@ function RecipesGrid (props) {
             Show Info
           </button>
           <button
-            id={`hide-button-${recipe_data._id}`}
+            id={`hide-button-${hashed_id}`}
             type="button"
             className="btn btn-outline-secondary"
             onClick={hideInfoSection}
@@ -100,7 +104,7 @@ function RecipesGrid (props) {
           </button>
         </div>
 
-        <div id={`info-section-${recipe_data._id}`} hidden={true}>
+        <div id={`info-section-${hashed_id}`} hidden={true}>
           <h6>
             Ingredients:
             {createDynamicLengthHTMLList("ul", recipe_data.ingredients)}
