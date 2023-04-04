@@ -1,3 +1,45 @@
+:root {
+  --richBlack: #171A21;
+  --paynesGrey: #617073;
+  --airSuperiorityBlue: #7A93AC;
+  /* --jordyBlue: #92BCEA;
+  --periwinkle: #AFB3F7; */
+  --honeydew: #EDFFEC;
+  --satinSheenGold: #BB9F06;
+}
+
+* {
+  color: var(--richBlack);
+}
+
+html {
+  background-color: var(--honeydew);
+}
+
+.bgStandard {
+  background-color: var(--honeydew);
+}
+
+.bgNav {
+  background-color: var(--airSuperiorityBlue);
+}
+
+.NavLink {
+  text-decoration: none;
+}
+
+.NavLink:hover {
+  color: var(--satinSheenGold);
+}
+
+.CreateAccountLink {
+  color: var(--richBlack);
+}
+
+.CreateAccountLink:hover {
+  color: var(--satinSheenGold);
+}
+
 .Recipe-Box {
   min-height: 65vh;
   min-width: 50vw;

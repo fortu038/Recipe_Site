@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
 
 import Navigation from "../../Navigation";
 import RecipesGrid from "./RecipesGrid";
@@ -14,7 +13,7 @@ function Recipes(props) {
   }, []);
 
   return(
-    <Container>
+    <div className="bgStandard">
       <Navigation />
 
       <div className="text-secondary d-flex flex-column align-items-center">
@@ -24,7 +23,7 @@ function Recipes(props) {
           }
           )}
       </div>
-    </Container>
+    </div>
   )
 }
 

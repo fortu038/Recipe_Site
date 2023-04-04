@@ -42,7 +42,12 @@ function UserLoginForm() {
   }, [appState]);
 
   return (
-    <>
+    <div>
+      { formMessage.msg.length > 0 && (
+        <alert className={`alert ${formMessage.type}`}>
+          {formMessage.msg}
+        </alert>
+      )}
       <form className="mt-4 text-center" onSubmit={handleLogin}>
         <div className="form-group pb-4">
           <label htmlFor="username">Username:</label>
@@ -67,15 +72,12 @@ function UserLoginForm() {
           />
         </div>
 
-        <button type="submit" className="btn btn-secondary">Log In</button>
+        <button type="submit" className="btn">Log In</button>
       </form>
-      <a href={"/create"} className="link-secondary">Create an Account</a>
-      { formMessage.msg.length > 0 && (
-        <alert className={`alert ${formMessage.type}`}>
-          {formMessage.msg}
-        </alert>
-      )}
-    </>
+      <div className="text-center">
+        <a href={"/create"} className="mt-5 CreateAccountLink">Create an Account</a>
+      </div>
+    </div>
   )
 }
 

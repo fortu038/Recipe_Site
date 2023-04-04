@@ -5,15 +5,15 @@ import Navigation from "../../Navigation";
 
 function Homepage() {
   return(
-    <Container>
+    <div className="bgStandard">
       <Navigation />
 
-      <div className="text-secondary d-flex flex-column justify-content-center align-items-center">
+      <Container className="text-secondary d-flex flex-column justify-content-center align-items-center">
         <h2 className="text-center">
           Welcome to the Online Cookbook! Browse our recipes or login to add your own.
         </h2>
-      </div>
-    </Container>
+      </Container>
+    </div>
   )
 }
 
