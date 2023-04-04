@@ -35,15 +35,15 @@ function Navigation() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to={`/${url_name}`}>
+            <Nav.Link as={Link} to={"/"}>
               <h5>Home</h5>
             </Nav.Link>
-            <Nav.Link as={Link} to={`/${url_name}-recipes`}>
+            <Nav.Link as={Link} to={"/recipes"}>
               <h5>Recipes</h5>
             </Nav.Link>
             {appState.user &&
               <>
-                <Nav.Link as={Link} to={`/${url_name}-add`}>
+                <Nav.Link as={Link} to={"/add"}>
                   <h5>Add Recipe</h5>
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout}>
@@ -52,7 +52,7 @@ function Navigation() {
               </>
             }
             {!appState.user &&
-              <Nav.Link as={Link} to={`/${url_name}-login`}>
+              <Nav.Link as={Link} to={"/login"}>
                 <h5>Login or Create an Account</h5>
               </Nav.Link>
             }

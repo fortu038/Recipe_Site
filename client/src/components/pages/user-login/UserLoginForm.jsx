@@ -37,7 +37,7 @@ function UserLoginForm() {
 
   useEffect(() => {
     if( appState.user ) {
-      window.location.href = `/${url_name}`;
+      window.location.href = "/";
     }
   }, [appState]);
 
@@ -69,7 +69,7 @@ function UserLoginForm() {
 
         <button type="submit" className="btn btn-secondary">Log In</button>
       </form>
-      <a href={`/${url_name}-create`} className="link-secondary">Create an Account</a>
+      <a href={"/create"} className="link-secondary">Create an Account</a>
       { formMessage.msg.length > 0 && (
         <alert className={`alert ${formMessage.type}`}>
           {formMessage.msg}
