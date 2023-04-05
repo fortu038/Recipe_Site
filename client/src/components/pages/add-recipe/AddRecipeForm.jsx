@@ -4,6 +4,8 @@ import { useAppContext } from "../../utils/AppContext";
 function AddRecipeForm() {
   const { appState } = useAppContext();
 
+  const [alertMessage, setAlertMessage] = useState("");
+
   async function convertFileToBase64(fileToConvert) {
     let result_base64 = await new Promise((resolve) => {
         let reader = new FileReader();
@@ -12,7 +14,7 @@ function AddRecipeForm() {
     });
 
     return result_base64;
-}
+  };
 
   async function isValidFile() {
     const file = await document.getElementById("image").files[0];
@@ -36,7 +38,7 @@ function AddRecipeForm() {
 
       setNewRecipeData({ ...newRecipeData, image: file_base64 });
     }
-  }
+  };
 
   const [newRecipeData, setNewRecipeData] = useState({
     name: "",
@@ -57,7 +59,7 @@ function AddRecipeForm() {
 
     const username = await appState.user.username;
 
-    const posted_recipe = await fetch("/api/recipe", {
+    await fetch("/api/recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
@@ -72,35 +74,46 @@ function AddRecipeForm() {
           tags: ["EMPTY"]
         }
       )
-    });
+    })
+      .then(
+        async function(response) {
+          const response_to_post_request = await response.json();
+          console.log("response_to_post_request is:");
+          console.log(response_to_post_request);
 
-    const response_to_post_request = await posted_recipe.json();
-    
-    if(response_to_post_request.result === "success") {
-      document.getElementById("success-alert").hidden = false;
-      setNewRecipeData({
-        name: "",
-        image: null,
-        alt_text: "",
-        ingredients: [],
-        tools_needed: [],
-        steps: [],
-        posted_by: ""
-      });
-    }
-    else {
-      document.getElementById("failure-alert").hidden = false;
-    }
+          setAlertMessage(response_to_post_request.result);
+
+          setNewRecipeData({
+            name: "",
+            image: null,
+            alt_text: "",
+            ingredients: [],
+            tools_needed: [],
+            steps: [],
+            posted_by: ""
+          });
+        }
+      )
+      .catch(
+        function(error) {
+          console.error(error);
+          setAlertMessage("error");
+        }
+      )
   };
 
   return(
     <form className="mt-4 text-center" onSubmit={handleSubmit}>
-      <div id="success-alert" className="alert alert-success" role="alert" hidden={true}>
-        Successful Submit!
-      </div>
-      <div id="failure-alert" className="alert alert-danger" role="alert" hidden={true}>
-        Submit Error!
-      </div>
+      { alertMessage === "success" &&
+        <div id="success-alert" className="alert alert-success" role="alert">
+          Successful Submit!
+        </div>
+      }
+      { alertMessage === "error" &&
+        <div id="failure-alert" className="alert alert-danger" role="alert" hidden={true}>
+          Submit Error!
+        </div>
+      }
 
       <div className="form-group pb-4">
         <label htmlFor="name">Input Recipe Name:</label>
@@ -168,6 +181,6 @@ function AddRecipeForm() {
       <button id="submit-button" type="submit" className="btn btn-secondary" disabled={true}>Add Recipe</button>
     </form>
   )
-}
+};
 
 export default AddRecipeForm;
