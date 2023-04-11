@@ -13,10 +13,6 @@ N/A
 
 The created website acts as recipe site where users can log in and post and view their and other users recipes.
 
-## License
-
-Please refer to LICENSE.md in the repo
-
 ## Links
 
 GitHub Repo Link: https://github.com/fortu038/Recipe_Site
