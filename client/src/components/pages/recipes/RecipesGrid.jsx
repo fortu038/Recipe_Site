@@ -107,22 +107,24 @@ function RecipesGrid (props) {
             Recipe:
             {createDynamicLengthHTMLList("ol_type_1", recipe_data.steps)}
           </h6>
-          <div className="my-4 d-flex align-items-center justify-content-evenly">
-            <Button
-              type="button"
-              variant="info"
-              onClick={handleEdit}
-            >
-              Edit
-            </Button>
-            <Button
-              type="button"
-              variant="danger"
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-          </div>
+          { props.current_user === recipe_data.posted_by &&
+            <div className="my-4 d-flex align-items-center justify-content-evenly">
+              <Button
+                type="button"
+                variant="info"
+                onClick={handleEdit}
+              >
+                Edit
+              </Button>
+              <Button
+                type="button"
+                variant="danger"
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
+            </div>
+          }
         </Card.Text>
       </Card>
 
