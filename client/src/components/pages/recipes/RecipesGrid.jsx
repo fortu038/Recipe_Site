@@ -2,8 +2,6 @@ import React from 'react';
 import bcryptjs from "bcryptjs";
 import { Container, Card, Button, Modal } from 'react-bootstrap';
 
-// TODO: Make secuirty for individual entries better by encrypting the recipe IDs when they are used in the tag IDs
-
 function RecipesGrid (props) {
   let recipe_data = props.single_recipe;
 
