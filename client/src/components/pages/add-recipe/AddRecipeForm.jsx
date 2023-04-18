@@ -164,7 +164,7 @@ function AddRecipeForm() {
         />
       </div>
       <div className="form-group pb-4">
-        <label htmlFor="steps">Enter Recipe Steps in Order &#40;Type each step out as the step number followed by a period  and space followed by the step text&#41;:</label>
+        <label htmlFor="steps">Enter Recipe Steps in Order &#40;Type each step out as the step number followed by a period and space followed by the step text&#41;:</label>
         <br />
         <textarea
           type="text"

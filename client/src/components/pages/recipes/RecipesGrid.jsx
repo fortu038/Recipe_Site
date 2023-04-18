@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import bcryptjs from "bcryptjs";
-import { Container, Card, Button, Modal } from 'react-bootstrap';
+import { Container, Card, Button, Modal, Form, Alert } from 'react-bootstrap';
 
 function RecipesGrid (props) {
   let recipe_data = props.single_recipe;
 
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
+
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const [editedRecipe, setEditedRecipe] = useState({});
 
   const clean_name = recipe_data.name.replace(/_/g, " ");
 
@@ -22,6 +26,36 @@ function RecipesGrid (props) {
     document.getElementById(`show-button-${hashed_id}`).hidden = true;
   };
 
+  async function convertFileToBase64(fileToConvert) {
+    let result_base64 = await new Promise((resolve) => {
+        let reader = new FileReader();
+        reader.onload = (e) => resolve(reader.result);
+        reader.readAsDataURL(fileToConvert);
+    });
+
+    return result_base64;
+  };
+
+  async function isValidFile() {
+    const file = await document.getElementById("image").files[0];
+    
+    const file_base64 = await convertFileToBase64(file);
+
+    const file_size = file.size;
+
+    const file_Mb_limit = 7;
+    const file_byte_limt = file_Mb_limit * 1048576;
+
+    const is_file_too_big = file_size > file_byte_limt;
+
+    if(is_file_too_big) {
+      alert(`File size too large! Please use a file smaller than ${file_Mb_limit}Mb`);
+    }
+    else {
+      setEditedRecipe({ ...editedRecipe, image: file_base64 });
+    }
+  };
+
   /**
    * Helper function that creates a list of a desired type using given data
    * @param {*} list_type The type of list to be created. Valid inputs are ul, ol_type_1, ol_type_a, ol_type_A, ol_type_i, and ol_type_I.
@@ -30,10 +64,10 @@ function RecipesGrid (props) {
    * @returns The HTML representing the desired list, or a console error if an invalid list type or invalid list data is entered.
    */
   function createDynamicLengthHTMLList(list_type, list_data) {
-    if(list_data == null) {
+    if(!list_data) {
       console.error("Invalid or no list data");
       return;
-    }
+    };
 
     const list_items = list_data.map((item, index) => {
         return <li key={index}>{item}</li>
@@ -59,8 +93,40 @@ function RecipesGrid (props) {
     };
   };
 
-  function handleRecipeEdit() {
+  function handleInputChange(e) {
+    setEditedRecipe({ ...editedRecipe, [e.target.name]: e.target.value });
+  };
+
+  function handleRecipeEdit(e) {
+    e.preventDefault();
+
     console.log("edited");
+    
+    if(editedRecipe.name != null && editedRecipe.name != undefined) {
+      console.log("name");
+      const curr_name = editedRecipe.name;
+      setEditedRecipe({ ...editedRecipe, alt_text: curr_name });
+      setEditedRecipe({ ...editedRecipe, name: curr_name.replace(/ /g, "_") });
+      console.log("name end");
+    }
+    if(editedRecipe.ingredients != null && editedRecipe.ingredients != undefined) {
+      console.log("ingredients");
+      setEditedRecipe({ ...editedRecipe, ingredients: editedRecipe.ingredients.split(", ") });
+      console.log("ingredients end");
+    }
+    if(editedRecipe.tools_needed != null && editedRecipe.tools_needed != undefined) {
+      console.log("tools_needed");
+      setEditedRecipe({ ...editedRecipe, tools_needed: editedRecipe.tools_needed.split(", ") });
+      console.log("tools_needed end");
+    }
+    if(editedRecipe.steps != null && editedRecipe.steps != undefined) {
+      console.log("steps");
+      setEditedRecipe({ ...editedRecipe, steps: editedRecipe.steps.split(/\d+\. /g).slice(1) });
+      console.log("steps end");
+    }
+
+    console.log("past ifs")
+    console.log(editedRecipe);
     setEditModalShow(false);
   };
 
@@ -105,7 +171,7 @@ function RecipesGrid (props) {
   const salt = bcryptjs.genSaltSync(10);
   var hashed_id = bcryptjs.hashSync(recipe_data._id, salt);
 
-  // TODO: Make mobile screen container size w-50 and computer screen container size 2-75
+  // TODO: Make mobile screen container size w-50 and computer screen container size w-75
   return(
     <Container className="my-4 w-50 bgStandard">
       <Card>
@@ -169,6 +235,8 @@ function RecipesGrid (props) {
         <h6>Posted by: {recipe_data.posted_by}</h6>
       </div>
 
+
+      {/* Modal for deleting a recipe */}
       <Modal show={deleteModalShow} onHide={handleDeleteModalClose}>
         <Modal.Header className="bg-light" closeButton>
           <Modal.Title className="bg-light">Delete Alert</Modal.Title>
@@ -186,12 +254,71 @@ function RecipesGrid (props) {
         </Modal.Footer>
       </Modal>
 
+
+      {/* Modal for editing a recipe */}
       <Modal show={editModalShow} onHide={handleEditModalClose}>
         <Modal.Header className="bg-light" closeButton>
-          <Modal.Title className="bg-light">Editing {clean_name}</Modal.Title>
+          <Modal.Title className="bg-light">Editing {clean_name}. Blanks Entries Will Not Be Altered</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          This is the edit form
+          <Form>
+            <Form.Group controlId="name">
+              <Form.Label>
+                Edit Recipe Name:
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="name" 
+                className="form-control"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="image">
+              <Form.Label>
+                Edit Recipe Image &#40;JPEGs and PNGs only, file size limit of 6Mb&#41;:
+              </Form.Label>
+              <Form.Control
+                type="file"
+                name="image"
+                accept="image/png, image/jpg, image/jpeg"
+                multiple={false}
+                onChange={isValidFile}
+              />
+            </Form.Group>
+            <Form.Group controlId="ingredients">
+              <Form.Label>
+                Enter Ingredients &#40;Put commas between each entry&#41;:
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="ingredients"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="tools_needed">
+              <Form.Label>
+                Edit Tools Neeeded to Make &#40;Put commas between each entry&#41;:
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="tools_needed"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="steps">
+              <Form.Label>
+                Enter Recipe Steps in Order &#40;Type each step out as the step number followed by a period and space followed by the step text&#41;:
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                name="steps"
+                rows="5"
+                onChange={handleInputChange}
+                style={{height: "100px"}}
+                placeholder={"1. Example step 1\n2. Example step 2\n3. Example step 3"}
+              />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleRecipeEdit}>
