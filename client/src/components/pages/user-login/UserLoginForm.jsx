@@ -72,7 +72,7 @@ function UserLoginForm() {
           />
         </div>
 
-        <button type="submit" className="btn">Log In</button>
+        <button type="submit" className="btn btn-secondary">Log In</button>
       </form>
       <div className="text-center">
         <a href={"/create"} className="mt-5 CreateAccountLink">Create an Account</a>

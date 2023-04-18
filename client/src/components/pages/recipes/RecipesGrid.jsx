@@ -5,7 +5,8 @@ import { Container, Card, Button, Modal } from 'react-bootstrap';
 function RecipesGrid (props) {
   let recipe_data = props.single_recipe;
 
-  const [show, setShow] = useState(false);
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   const clean_name = recipe_data.name.replace(/_/g, " ");
 
@@ -58,8 +59,18 @@ function RecipesGrid (props) {
     };
   };
 
-  function handleEdit() {
+  function handleRecipeEdit() {
     console.log("edited");
+    setEditModalShow(false);
+  };
+
+
+  function handleEditModalOpen() {
+    setEditModalShow(true);
+  };
+
+  function handleEditModalClose() {
+    setEditModalShow(false);
   };
 
   async function handleRecipeDelete() {
@@ -77,18 +88,18 @@ function RecipesGrid (props) {
         console.log(err);
       })
 
-    setShow(false);
+    setDeleteModalShow(false);
 
     window.location.reload();
     return false;
   };
 
-  function handleModalOpen() {
-    setShow(true);
+  function handleDeleteModalOpen() {
+    setDeleteModalShow(true);
   };
 
-  function handleModalClose() {
-    setShow(false);
+  function handleDeleteModalClose() {
+    setDeleteModalShow(false);
   };
 
   const salt = bcryptjs.genSaltSync(10);
@@ -138,14 +149,14 @@ function RecipesGrid (props) {
               <Button
                 type="button"
                 variant="info"
-                onClick={handleEdit}
+                onClick={handleEditModalOpen}
               >
                 Edit
               </Button>
               <Button
                 type="button"
                 variant="danger"
-                onClick={handleModalOpen}
+                onClick={handleDeleteModalOpen}
               >
                 Delete
               </Button>
@@ -158,7 +169,7 @@ function RecipesGrid (props) {
         <h6>Posted by: {recipe_data.posted_by}</h6>
       </div>
 
-      <Modal show={show} onHide={handleModalClose}>
+      <Modal show={deleteModalShow} onHide={handleDeleteModalClose}>
         <Modal.Header className="bg-light" closeButton>
           <Modal.Title className="bg-light">Delete Alert</Modal.Title>
         </Modal.Header>
@@ -166,11 +177,28 @@ function RecipesGrid (props) {
           Are you sure you want to delete this recipe for {clean_name}? This cannot be reversed if done.
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleModalClose}>
+          <Button variant="primary" onClick={handleDeleteModalClose}>
             No, Don't Delete
           </Button>
           <Button variant="danger" onClick={handleRecipeDelete}>
             Yes, Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={editModalShow} onHide={handleEditModalClose}>
+        <Modal.Header className="bg-light" closeButton>
+          <Modal.Title className="bg-light">Editing {clean_name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          This is the edit form
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleRecipeEdit}>
+            Submit Edits
+          </Button>
+          <Button variant="danger" onClick={handleEditModalClose}>
+            Discard Changes
           </Button>
         </Modal.Footer>
       </Modal>
