@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import bcryptjs from "bcryptjs";
 import { Container, Card, Button, Modal } from 'react-bootstrap';
 
 function RecipesGrid (props) {
   let recipe_data = props.single_recipe;
+
+  const [show, setShow] = useState(false);
 
   const clean_name = recipe_data.name.replace(/_/g, " ");
 
@@ -60,15 +62,41 @@ function RecipesGrid (props) {
     console.log("edited");
   };
 
-  function handleDelete() {
+  async function handleRecipeDelete() {
     console.log("deleted");
-  }
+    await fetch(`/api/recipe/${recipe_data._id}`, {
+      method: "DELETE",
+    })
+      .then(function(fetch_response) 
+        {
+          console.log(fetch_response.result);
+        }
+      )
+      .catch(function(err) 
+      {
+        console.log(err);
+      })
+
+    setShow(false);
+
+    window.location.reload();
+    return false;
+  };
+
+  function handleModalOpen() {
+    setShow(true);
+  };
+
+  function handleModalClose() {
+    setShow(false);
+  };
 
   const salt = bcryptjs.genSaltSync(10);
   var hashed_id = bcryptjs.hashSync(recipe_data._id, salt);
 
+  // TODO: Make mobile screen container size w-50 and computer screen container size 2-75
   return(
-    <Container className="my-4 w-75 bgStandard">
+    <Container className="my-4 w-50 bgStandard">
       <Card>
         <Card.Img variant="top" src={recipe_data.image} alt={recipe_data.alt_text}  />
         <Card.Header>
@@ -117,7 +145,7 @@ function RecipesGrid (props) {
               <Button
                 type="button"
                 variant="danger"
-                onClick={handleDelete}
+                onClick={handleModalOpen}
               >
                 Delete
               </Button>
@@ -129,6 +157,23 @@ function RecipesGrid (props) {
       <div className="text-center text-secondary">
         <h6>Posted by: {recipe_data.posted_by}</h6>
       </div>
+
+      <Modal show={show} onHide={handleModalClose}>
+        <Modal.Header className="bg-light" closeButton>
+          <Modal.Title className="bg-light">Delete Alert</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-light">
+          Are you sure you want to delete this recipe for {clean_name}? This cannot be reversed if done.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleModalClose}>
+            No, Don't Delete
+          </Button>
+          <Button variant="danger" onClick={handleRecipeDelete}>
+            Yes, Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   )
 }
