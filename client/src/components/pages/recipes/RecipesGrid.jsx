@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import bcryptjs from "bcryptjs";
 import { Container, Card, Button, Modal, Form, Alert } from 'react-bootstrap';
 
@@ -10,7 +10,7 @@ function RecipesGrid (props) {
 
   const [alertMessage, setAlertMessage] = useState("");
 
-  const [editedRecipe, setEditedRecipe] = useState({});
+  const [editedRecipeData, setEditedRecipeData] = useState({});
 
   const clean_name = recipe_data.name.replace(/_/g, " ");
 
@@ -52,7 +52,7 @@ function RecipesGrid (props) {
       alert(`File size too large! Please use a file smaller than ${file_Mb_limit}Mb`);
     }
     else {
-      setEditedRecipe({ ...editedRecipe, image: file_base64 });
+      setEditedRecipeData({ ...editedRecipeData, image: file_base64 });
     }
   };
 
@@ -94,7 +94,7 @@ function RecipesGrid (props) {
   };
 
   function handleInputChange(e) {
-    setEditedRecipe({ ...editedRecipe, [e.target.name]: e.target.value });
+    setEditedRecipeData({ ...editedRecipeData, [e.target.name]: e.target.value });
   };
 
   function handleRecipeEdit(e) {
@@ -102,31 +102,33 @@ function RecipesGrid (props) {
 
     console.log("edited");
     
-    if(editedRecipe.name != null && editedRecipe.name != undefined) {
+    if(editedRecipeData.name != null && editedRecipeData.name != undefined) {
       console.log("name");
-      const curr_name = editedRecipe.name;
-      setEditedRecipe({ ...editedRecipe, alt_text: curr_name });
-      setEditedRecipe({ ...editedRecipe, name: curr_name.replace(/ /g, "_") });
+      setEditedRecipeData({ ...editedRecipeData, alt_text: editedRecipeData.name });
+      setEditedRecipeData({ ...editedRecipeData, name: editedRecipeData.name.replace(/ /g, "_") });
       console.log("name end");
     }
-    if(editedRecipe.ingredients != null && editedRecipe.ingredients != undefined) {
+    if(editedRecipeData.ingredients != null && editedRecipeData.ingredients != undefined) {
       console.log("ingredients");
-      setEditedRecipe({ ...editedRecipe, ingredients: editedRecipe.ingredients.split(", ") });
+      setEditedRecipeData({ ...editedRecipeData, ingredients: editedRecipeData.ingredients.split(", ") });
       console.log("ingredients end");
     }
-    if(editedRecipe.tools_needed != null && editedRecipe.tools_needed != undefined) {
+    if(editedRecipeData.tools_needed != null && editedRecipeData.tools_needed != undefined) {
       console.log("tools_needed");
-      setEditedRecipe({ ...editedRecipe, tools_needed: editedRecipe.tools_needed.split(", ") });
+      setEditedRecipeData({ ...editedRecipeData, tools_needed: editedRecipeData.tools_needed.split(", ") });
       console.log("tools_needed end");
     }
-    if(editedRecipe.steps != null && editedRecipe.steps != undefined) {
+    if(editedRecipeData.steps != null && editedRecipeData.steps != undefined) {
       console.log("steps");
-      setEditedRecipe({ ...editedRecipe, steps: editedRecipe.steps.split(/\d+\. /g).slice(1) });
+      setEditedRecipeData({ ...editedRecipeData, steps: editedRecipeData.steps.split(/\d+\. /g).slice(1) });
       console.log("steps end");
     }
 
     console.log("past ifs")
-    console.log(editedRecipe);
+    console.log(editedRecipeData);
+
+    setEditedRecipeData({});
+    console.log(editedRecipeData)
     setEditModalShow(false);
   };
 
