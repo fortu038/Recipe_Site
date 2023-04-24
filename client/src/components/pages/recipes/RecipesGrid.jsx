@@ -97,41 +97,66 @@ function RecipesGrid (props) {
     setEditedRecipeData({ ...editedRecipeData, [e.target.name]: e.target.value });
   };
 
-  function handleRecipeEdit(e) {
+  async function handleRecipeEdit(e) {
     e.preventDefault();
 
-    console.log("edited");
-    
-    if(editedRecipeData.name != null && editedRecipeData.name != undefined) {
+    await fetch(`/api/recipe/${recipe_data._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editedRecipeData)
+    })
+      .then(
+        async function(response) {
+          const response_to_put_request = await response.json();
+          console.log("response_to_put_request is:");
+          console.log(response_to_put_request);
+
+          setAlertMessage(response_to_put_request.result);
+
+          console.log(editedRecipeData)
+          setEditModalShow(false);
+          window.location.reload();
+          return false;
+        }
+      )
+      .catch(
+        function(error) {
+          console.error(error);
+          setAlertMessage("error");
+        }
+      )
+  };
+
+  useEffect(() => {
+    const newEditedRecipe = editedRecipeData;
+
+    if(newEditedRecipe.name != null && newEditedRecipe.name != undefined) {
       console.log("name");
-      setEditedRecipeData({ ...editedRecipeData, alt_text: editedRecipeData.name });
-      setEditedRecipeData({ ...editedRecipeData, name: editedRecipeData.name.replace(/ /g, "_") });
+      newEditedRecipe.alt_text = newEditedRecipe.name;
+      newEditedRecipe.name = newEditedRecipe.name.replace(/ /g, "_");
       console.log("name end");
     }
-    if(editedRecipeData.ingredients != null && editedRecipeData.ingredients != undefined) {
+    if(newEditedRecipe.ingredients != null && newEditedRecipe.ingredients != undefined) {
       console.log("ingredients");
-      setEditedRecipeData({ ...editedRecipeData, ingredients: editedRecipeData.ingredients.split(", ") });
+      newEditedRecipe.ingredients = newEditedRecipe.ingredients.split(", ");
       console.log("ingredients end");
     }
-    if(editedRecipeData.tools_needed != null && editedRecipeData.tools_needed != undefined) {
+    if(newEditedRecipe.tools_needed != null && newEditedRecipe.tools_needed != undefined) {
       console.log("tools_needed");
-      setEditedRecipeData({ ...editedRecipeData, tools_needed: editedRecipeData.tools_needed.split(", ") });
+      newEditedRecipe.tools_needed = newEditedRecipe.tools_needed.split(", ");
       console.log("tools_needed end");
     }
-    if(editedRecipeData.steps != null && editedRecipeData.steps != undefined) {
+    if(newEditedRecipe.steps != null && newEditedRecipe.steps != undefined) {
       console.log("steps");
-      setEditedRecipeData({ ...editedRecipeData, steps: editedRecipeData.steps.split(/\d+\. /g).slice(1) });
+      newEditedRecipe.steps = newEditedRecipe.steps.split(/\d+\. /g).slice(1);
       console.log("steps end");
     }
 
-    console.log("past ifs")
-    console.log(editedRecipeData);
+    console.log("after ifs");
+    console.log(newEditedRecipe);
 
-    setEditedRecipeData({});
-    console.log(editedRecipeData)
-    setEditModalShow(false);
-  };
-
+    setEditedRecipeData(newEditedRecipe);
+  }, [editedRecipeData]);
 
   function handleEditModalOpen() {
     setEditModalShow(true);
@@ -262,6 +287,16 @@ function RecipesGrid (props) {
         <Modal.Header className="bg-light" closeButton>
           <Modal.Title className="bg-light">Editing {clean_name}. Blanks Entries Will Not Be Altered</Modal.Title>
         </Modal.Header>
+        { alertMessage.result === "success" &&
+          <Alert key="success" variant="success">
+            Successful Submit
+          </Alert>
+        }
+        { alertMessage === "error" &&
+          <Alert key="danger" variant="danger">
+            Edit Error, Please Try Again Later
+          </Alert>
+        }
         <Modal.Body>
           <Form>
             <Form.Group controlId="name">
