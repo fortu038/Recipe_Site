@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAppContext } from "../../utils/AppContext";
+import { Container, Button, Form, Alert } from 'react-bootstrap';
 
 function AddRecipeForm() {
   const { appState } = useAppContext();
@@ -81,7 +82,7 @@ function AddRecipeForm() {
           console.log("response_to_post_request is:");
           console.log(response_to_post_request);
 
-          setAlertMessage(response_to_post_request.result);
+          setAlertMessage(response_to_post_request);
 
           setNewRecipeData({
             name: "",
@@ -103,83 +104,84 @@ function AddRecipeForm() {
   };
 
   return(
-    <form className="mt-4 text-center" onSubmit={handleSubmit}>
-      { alertMessage === "success" &&
-        <div id="success-alert" className="alert alert-success" role="alert">
-          Successful Submit!
-        </div>
+    <Form onSubmit={handleSubmit}>
+      { alertMessage.result === "success" &&
+        <Alert key="success" variant="success">
+          Successful Submit
+        </Alert>
       }
       { alertMessage === "error" &&
-        <div id="failure-alert" className="alert alert-danger" role="alert" hidden={true}>
-          Submit Error!
-        </div>
+        <Alert key="danger" variant="danger">
+          Submit Error, Please Try Again Later
+        </Alert>
       }
-
-      <div className="form-group pb-4">
-        <label htmlFor="name">Input Recipe Name:</label>
-        <br />
-        <input
+      <Form.Group controlId="name">
+        <Form.Label>
+          Input Recipe Name:
+        </Form.Label>
+        <Form.Control
           type="text"
           name="name" 
           className="form-control"
           onChange={handleInputChange}
           required
         />
-      </div>
-      <div className="form-group pb-4">
-        <label htmlFor="image">Provide a Recipe Image &#40;JPEGs and PNGs only, file size limit of 6Mb&#41;:</label>
-        <br />
-        <div className="d-flex justify-content-center">
-          <input
-            id="image"
-            className="d-flex justify-content-center"
-            type="file"
-            name="image"
-            accept="image/png, image/jpg, image/jpeg"
-            multiple={false}
-            onChange={isValidFile}
-          />
-        </div>
-      </div>
-      <div className="form-group pb-4">
-        <label htmlFor="ingredients">Enter Ingredients &#40;Put commas between each entry&#41;:</label>
-        <br />
-        <input
+      </Form.Group>
+      <Form.Group className="mt-3" controlId="image">
+        <Form.Label>
+          Provide a Recipe Image &#40;JPEGs and PNGs only, file size limit of 6Mb&#41;:
+        </Form.Label>
+        <Form.Control
+          type="file"
+          name="image"
+          accept="image/png, image/jpg, image/jpeg"
+          multiple={false}
+          onChange={isValidFile}
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mt-3" controlId="ingredients">
+        <Form.Label>
+          Enter Ingredients &#40;Put commas between each entry&#41;:
+        </Form.Label>
+        <Form.Control
           type="text"
           name="ingredients"
-          className="form-control"
           onChange={handleInputChange}
           required
         />
-      </div>
-      <div className="form-group pb-4">
-        <label htmlFor="tools_needed">Enter Tools Neeeded to Make &#40;Put commas between each entry&#41;:</label>
-        <br />
-        <input
+      </Form.Group>
+      <Form.Group className="mt-3" controlId="tools_needed">
+        <Form.Label>
+          Enter Tools Neeeded to Make &#40;Put commas between each entry&#41;:
+        </Form.Label>
+        <Form.Control
           type="text"
           name="tools_needed"
-          className="form-control"
           onChange={handleInputChange}
           required
         />
-      </div>
-      <div className="form-group pb-4">
-        <label htmlFor="steps">Enter Recipe Steps in Order &#40;Type each step out as the step number followed by a period and space followed by the step text&#41;:</label>
-        <br />
-        <textarea
-          type="text"
+      </Form.Group>
+      <Form.Group className="mt-3" controlId="steps">
+        <Form.Label>
+          Enter Recipe Steps in Order &#40;Type each step out as the step number followed by a period and space followed by the step text&#41;:
+        </Form.Label>
+        <Form.Control
+          as="textarea"
           name="steps"
-          className="form-control"
           rows="5"
           onChange={handleInputChange}
           style={{height: "100px"}}
           placeholder={"1. Example step 1\n2. Example step 2\n3. Example step 3"}
           required
         />
-      </div>
-
-      <button id="submit-button" type="submit" className="btn btn-secondary" disabled={true}>Add Recipe</button>
-    </form>
+      </Form.Group>
+      <Container className="mt-3 d-flex justify-content-center">
+        <Button id="submit-button" type="submit" variant="secondary" disabled={true}>
+          Add Recipe
+        </Button>
+      </Container>
+    </Form>
   )
 };
 
